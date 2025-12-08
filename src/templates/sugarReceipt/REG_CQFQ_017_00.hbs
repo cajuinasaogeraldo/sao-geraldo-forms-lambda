@@ -1,0 +1,265 @@
+<html lang='pt-BR' style="background-image: url('{{background}}'); background-size: cover; background-position: center">
+  <head>
+    <meta charset='UTF-8' />
+    <title>LAUDO DE ANÁLISE DE FLOCOS ÁCIDOS PARA AÇÚCAR</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+      @page {
+        margin: 0;
+        size: A4;
+      }
+      html {
+        width: 209.9mm;
+        height: 296.7mm;
+        margin: 0;
+        padding: 0;
+      }
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: 'Roboto', Arial, sans-serif;
+      }
+      body {
+        width: 209.9mm;
+        margin: 0 auto;
+        padding-left: 3cm;
+        padding-right: 2cm;
+        padding-top: 1cm;
+        padding-bottom: 1cm;
+      }
+      h2,
+      h3 {
+        text-align: center;
+        margin: 5px 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      td {
+        border: 1px solid black;
+        padding: 2px 2px 2px 5px;
+        font-size: 12px;
+        text-align: left;
+        vertical-align: middle;
+        height: 30px;
+      }
+      header table {
+        border: 2px solid black;
+        margin-bottom: 10px;
+      }
+      header td {
+        border: none;
+      }
+      header td:nth-child(1) {
+        width: 20%;
+        height: 70px;
+        border-right: 2px solid black;
+        padding-top: 20px;
+      }
+      header td:nth-child(2) {
+        padding-top: 20px;
+        width: 50%;
+        font-size: 18px;
+        font-weight: 600;
+        text-align: center;
+        border-right: 2px solid black;
+      }
+      header td:nth-child(3) {
+        width: 30%;
+        font-size: 14px;
+        text-align: left;
+      }
+      .section-title {
+        background-color: rgb(249, 247, 251);
+        font-weight: 600;
+        font-size: 16px;
+        text-align: center;
+        padding: 3px;
+      }
+      .page-break {
+        padding-left: 3cm;
+        padding-right: 2cm;
+        padding-top: 1cm;
+        padding-bottom: 1cm;
+      }
+      .section-title-green {
+        background-color: rgba(140, 193, 60);
+        font-weight: 600;
+        font-size: 16px;
+        text-align: center;
+        padding: 5px;
+      }
+      .section-title-no-color {
+        font-weight: 600;
+        font-size: 16px;
+        text-align: center;
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <table>
+        <tr>
+          <td>
+            <img src='{{logoBase64}}' alt='Logo' style='width: 75%; height: 70px; object-fit: cover' />
+          </td>
+          <td>LAUDO DE ANÁLISE DE FLOCOS ÁCIDOS PARA AÇÚCAR</td>
+          <td>
+            <p style='border-bottom: 1px solid black; padding: 2px'>REGISTRO Nº:<br /><strong>REG CQFQ 17</strong></p>
+            <p style='border-bottom: 1px solid black; padding: 2px'>REVISÃO: <strong>00</strong></p>
+            <p style='border-bottom: 1px solid black; padding: 2px'>EM VIGOR: <strong>09.07.2025</strong></p>
+            <p style='padding: 2px'>PÁGINA: <strong>1 Página</strong></p>
+          </td>
+        </tr>
+      </table>
+    </header>
+
+    <table class='ident-table'>
+      <tr>
+        <td class='section-title' colspan='8'>1. Identificação do Certificado de Qualidade do Açúcar</td>
+      </tr>
+      <tr>
+        <td>Data de Recebimento:</td>
+        <td>{{formatDate dataRecebimento}}</td>
+        <td>Nº da Amostra</td>
+        <td>{{numeroAmostra}}</td>
+      </tr>
+      <tr>
+        <td colspan='1'>Nº da Nota Fiscal:</td>
+        <td colspan='5'>{{numeroNotaFiscal}}</td>
+      </tr>
+      <tr>
+        <td>Fabricante:</td>
+        <td>{{fabricante}}</td>
+        <td>Fornecedor:</td>
+        <td>{{fornecedor}}</td>
+      </tr>
+      <tr>
+        <td>Data de Fabricação do Açúcar:</td>
+        <td>{{formatDate dataFabricacao}}</td>
+        <td>Quantidade Recebida:</td>
+        <td>{{formatNumber quantidadeRecebida}} KG</td>
+      </tr>
+      <tr>
+        <td>Safra:</td>
+        <td>{{safra}}</td>
+        <td>Lote:</td>
+        <td>{{lote}}</td>
+      </tr>
+      <tr>
+        <td colspan='1'>Composição</td>
+        <td colspan='5'>{{composicao}}</td>
+      </tr>
+    </table>
+
+    <table style='margin-top: 2px; width: 100%'>
+      <tr>
+        <td class='section-title' colspan='2'>2. Análise de Flocos Ácidos</td>
+      </tr>
+      <tr>
+        <td class='section-title' style='width: 25%'><strong>Testes</strong></td>
+        <td class='section-title' style='width: 75%'><strong>Resultados</strong></td>
+      </tr>
+      <tr>
+        <td>Data da Análise:</td>
+        <td>{{formatDate dataAnalise}}</td>
+      </tr>
+      <tr>
+        <td>Flocos Ácidos: <span style='color: red'>(Nível de 0 a 2)</span></td>
+        <td>{{flocosAcidos}}</td>
+      </tr>
+      <t>
+        <td colspan='2'>Assinatura do Analista Responsável:
+          <span style='margin-right: 10px;'>{{assinaturaResponsavelAnaliseFlocos}}</span>
+        </td>
+      </t>
+    </table>
+
+    <table class='ident-table' style='margin-top: 2px'>
+      <tr>
+        <td class='section-title' colspan='8'>3. Status Final da Amostra</td>
+      </tr>
+      <tr>
+        <td>
+          <div style='display: flex; justify-content: center; gap: 30px; margin: 5px 0; font-size: 14px'>
+            ({{#if (eq status 'Aprovada')}}✔{{/if}}) Aprovado ({{#if (eq status 'Reprovada')}}✔{{/if}}) Reprovada
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Observações:</strong>
+          <span style='display: inline-block; width: 500px; height: 80px; white-space: pre-line;'>{{observacoes}}</span>
+        </td>
+      </tr>
+    </table>
+
+    <div style='margin-top: 15px'>
+      <p style='text-align: justify; font-size: 14px'>
+        <strong>NOTA 01:</strong>
+        Para a escala de 0 a 2 referente ao resultado de flocos ácidos se tem a seguinte caracterização:
+      </p>
+      <ul style='font-size: 14px; padding-left: 50px; text-align: justify; margin-top: 0'>
+        <li>0 = Negativo: Completa ausência de particulado.</li>
+        <li>0 = Turvo: Sem partículas visíveis.</li>
+        <li>1 = Pintpoint: Partículas discretas e muito pequenas, formato não definido, visíveis à luz.</li>
+        <li>2 = Leve: Diversas partículas agrupadas, semelhante a algodão.</li>
+      </ul>
+
+      <div style='margin-top: 25px; font-size: 14px'>
+        <strong>Assinatura da Gerente de Qualidade:</strong>
+        <span style='display: inline-block; width: 200px; border-bottom: 1px solid #000'></span>
+        <strong>Data:</strong>
+        <span style='display: inline-block; width: 100px; border-bottom: 1px solid #000'></span>
+      </div>
+    </div>
+
+    <table style='margin-bottom: 10px; margin-top: 10px'>
+      <tr>
+        <td class='section-title-green' colspan='3' style='text-align: center'>APROVAÇÕES</td>
+      </tr>
+      <tr>
+        <td style='text-align: center; border: 1px solid black; font-size: 14px'>
+          <strong style='text-decoration: underline'>Elaborado por: <br /></strong>
+          Maria Gomes<br />
+          09/07/2025<br />
+          Analista de Qualidade
+        </td>
+        <td style='text-align: center; border: 1px solid black; font-size: 14px'>
+          <strong style='text-decoration: underline'>Revisado por: <br /></strong>
+          Beatriz Duarte<br />
+          09/07/2025<br />
+          Analista de Qualidade
+        </td>
+        <td style='text-align: center; border: 1px solid black; font-size: 14px'>
+          <strong style='text-decoration: underline'>Aprovado por: <br /></strong>
+          Camila Souza<br />
+          09/07/2025<br />
+          Gerente de Qualidade
+        </td>
+      </tr>
+    </table>
+
+    <table>
+      <tr>
+        <td class='section-title-no-color' colspan='4' style='text-align: center'>HISTÓRICO</td>
+      </tr>
+      <tr>
+        <td style='text-align: center; font-weight: bold'>REVISÃO</td>
+        <td style='text-align: center; font-weight: bold'>DATA</td>
+        <td style='text-align: center; font-weight: bold'>RESPONSÁVEL</td>
+        <td style='text-align: center; font-weight: bold'>ALTERAÇÕES</td>
+      </tr>
+      <tr style='font-size: 14px'>
+        <td>00</td>
+        <td>09.07.2024</td>
+        <td>Maria Gomes</td>
+        <td>- Emissão inicial</td>
+      </tr>
+    </table>
+    <p style=' font-weight: bold;right:0; position:absolute;padding-right:70px;margin-top:50px;'>1</p>
+  </body>
+</html>

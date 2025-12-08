@@ -1,0 +1,486 @@
+<html
+  lang='pt-BR'
+  style="background-image: url('{{background}}'); background-size: contain; background-position: center; background-repeat: repeat; "
+>
+  <head>
+    <meta charset='UTF-8' />
+    <title>CHECKLIST DE MONITORAMENTO DO PROCESSO DE RECEBIMENTO DE AÇÚCAR</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+      @page {
+        margin: 0;
+        size: landscape;
+      }
+      html {
+        width: 297mm;
+        height: 210mm;
+        margin: 0;
+        padding: 0;
+        scale: 0.85;
+      }
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: 'Roboto', Arial, sans-serif;
+      }
+      body {
+        width: 297mm;
+        margin: 0 auto;
+        padding-left: 1.5cm;
+        padding-right: 0.5cm;
+        padding-top: 0cm;
+        padding-bottom: 0cm;
+      }
+      h2,
+      h3 {
+        text-align: center;
+        margin: 3px 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      td {
+        border: 1px solid black;
+        padding: 2px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: top;
+      }
+      header table {
+        border: 2px solid black;
+        margin-bottom: 5px;
+      }
+      header td {
+        border: none;
+      }
+      header td:nth-child(1) {
+        width: 20%;
+        height: 70px;
+        border-right: 2px solid black;
+        padding-top: 10px;
+      }
+      header td:nth-child(2) {
+        padding-top: 10px;
+        width: 50%;
+        font-size: 18px;
+        font-weight: 600;
+        text-align: center;
+        border-right: 2px solid black;
+      }
+      header td:nth-child(3) {
+        width: 30%;
+        font-size: 13px;
+        text-align: left;
+      }
+      .section-title {
+        background-color: rgb(241, 195, 195);
+        font-weight: 600;
+        font-size: 16px;
+        text-align: center;
+        padding: 3px;
+      }
+      .section-title-green {
+        background-color: rgba(140, 193, 60);
+        font-weight: 600;
+        font-size: 16px;
+        text-align: center;
+        padding: 3px;
+      }
+      .section-title-no-color {
+        font-weight: 600;
+        font-size: 13px;
+        text-align: center;
+        padding: 3px;
+      }
+      .general-info-row {
+        display: flex;
+        flex-direction: column;
+      }
+      .general-info-row td {
+        text-align: left;
+        font-size: 10px;
+      }
+      .general-info-row td:first-child {
+        border-top: none;
+      }
+      .general-info-row td:last-child {
+        border-bottom: none;
+      }
+      label {
+        margin-right: 10px;
+        font-size: 10px;
+      }
+      input[type='checkbox'] {
+        margin-right: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <table>
+        <tr>
+          <td>
+            <img src='{{logoBase64}}' alt='Logo' style='width: 67%; height: 78px; object-fit: cover' />
+          </td>
+          <td>CHECKLIST DE MONITORAMENTO DO PROCESSO DE RECEBIMENTO DE AÇÚCAR</td>
+          <td>
+            <p style='border-bottom: 1px solid black; padding: 2px'>
+              REGISTRO Nº:<br />
+              <strong>REG GQ ALM 001</strong>
+            </p>
+            <p style='border-bottom: 1px solid black; padding: 2px'>REVISÃO: <strong>00</strong></p>
+            <p style='border-bottom: 1px solid black; padding: 2px'>EM VIGOR: <strong>25.04.2025</strong></p>
+            <p style='padding: 2px'>PÁGINA <strong>1 Página</strong></p>
+          </td>
+        </tr>
+      </table>
+    </header>
+
+    <table class='general-info-table'>
+      <tr>
+        <td class='section-title' colspan='14'>1. INFORMAÇÕES GERAIS</td>
+      </tr>
+      <tr>
+        <td>
+          <div style='display: flex; flex-direction: column; padding: 3px'>
+            <span style='font-weight: 600'>FORNECEDOR</span>
+            <span style='margin-top: 10px'>{{fornecedor}}</span>
+          </div>
+        </td>
+        <td>
+          <div style='display: flex; flex-direction: column; padding: 3px'>
+            <span style='font-weight: 600'>Nº FISCAL</span>
+            <span style='margin-top: 10px'>{{numeroFiscal}}</span>
+          </div>
+        </td>
+        <td>
+          <div style='display: flex; flex-direction: column; padding: 3px'>
+            <span style='font-weight: 600'>DATA DE ENTREGA</span>
+            <span style='margin-top: 3px'>{{formatDate dataEntrega}}</span>
+          </div>
+        </td>
+        <td>
+          <div style='display: flex; flex-direction: column; padding: 3px'>
+            <span style='font-weight: 600; text-align: center'>HORÁRIO</span>
+            <div style='display: flex; justify-content: space-between; margin-top: 3px'>
+              <span>INÍCIO:</span>
+              <span>{{horarioInicio}}</span>
+            </div>
+            <div style='display: flex; justify-content: space-between; margin-top: 3px'>
+              <span style='font-weight: 500'>FIM:</span>
+              <span>{{horarioFinal}}</span>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div style='display: flex; flex-direction: column; padding: 3px'>
+            <span style='font-weight: 600'>VOLUME</span>
+            <span style='margin-top: 3px'>{{volume}}</span>
+          </div>
+        </td>
+        <td>
+          <div style='display: flex; flex-direction: column; padding: 3px'>
+            <span style='font-weight: 600'>QUANTIDADE NF</span>
+            <span style='margin-top: 3px'>{{quantidadeNF}}</span>
+          </div>
+        </td>
+        <td>
+          <div style='display: flex; flex-direction: column; padding: 3px'>
+            <span style='font-weight: 600'>QUANTIDADE RECEBIDA</span>
+            <span style='margin-top: 3px'>{{formatNumber quantidadeRecebida}}</span>
+          </div>
+        </td>
+        <td>
+          <div style='display: flex; flex-direction: column; padding: 3px'>
+            <span style='font-weight: 600; text-align: center'>RESPONSÁVEL PELO RECEBIMENTO</span>
+            <div style='display: flex; margin-top: 3px'>
+              <span style='font-weight: 500'>NOME:</span>
+              <span style='margin-left: 3px'>{{responsavelRecebimento.nome}}</span>
+            </div>
+            <div style='display: flex; margin-top: 3px'>
+              <span>MATRÍCULA:</span>
+              <span style='margin-left: 3px'>{{responsavelRecebimento.matricula}}</span>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <!-- BLOCO DE QUESTÕES -->
+      <tr>
+        <td style='text-align: start' colspan='4'>O VALOR E A QUANTIDADE ESTÃO DE ACORDO COM O PEDIDO?</td>
+        <td colspan='2'>
+          {{#if valorQuantidadeDeAcordo}} (✔) SIM ( ) NÃO {{else}}
+            {{#isFalse valorQuantidadeDeAcordo}}
+              ( ) SIM (✔) NÃO
+            {{else}} ( ) SIM ( ) NÃO {{/isFalse}}
+          {{/if}}
+        </td>
+        <td class='' rowspan='5' colspan='2' style='vertical-align: top; width: 300px'>
+          <div>
+            <span style='font-weight: 600'>OBSERVAÇÕES</span>
+          </div>
+          <div
+            style='min-height: 100%; margin-top: 3px; margin-left: 3px; text-align: start; white-space: pre-line;'
+          >{{observacoesinformacoesGerais}}</div>
+        </td>
+      </tr>
+      <td style='text-align: start' colspan='4'>O MANIFESTO DA CARGA VEIO ACOMPANHANDO A NOTA FISCAL?</td>
+      <td colspan='2'>
+        {{#if manifestoAcompanhaNota}} (✔) SIM ( ) NÃO {{else}}
+          {{#isFalse manifestoAcompanhaNota}}
+            ( ) SIM (✔) NÃO
+          {{else}} ( ) SIM ( ) NÃO {{/isFalse}}
+        {{/if}}
+      </td>
+      <tr>
+        <td style='text-align: start' colspan='4'>O CERTIFICADO DE QUALIDADE FOI ENTREGUE?</td>
+        <td colspan='2'>
+          {{#if certificadoEntrega}} (✔) SIM ( ) NÃO {{else}}
+            {{#isFalse certificadoEntrega}} ( ) SIM (✔) NÃO {{else}}
+              ( ) SIM ( ) NÃO
+            {{/isFalse}}
+          {{/if}}
+        </td>
+      </tr>
+      <tr>
+        <td style='text-align: start' colspan='4'>O CONHECIMENTO DE FRETE ACOMPANHA A NOTA FISCAL?</td>
+        <td colspan='2'>
+          {{#if conhecimentoFrete}} (✔) SIM ( ) NÃO {{else}}
+            {{#isFalse conhecimentoFrete}} ( ) SIM (✔) NÃO {{else}} ( ) SIM ( ) NÃO {{/isFalse}}
+          {{/if}}
+        </td>
+      </tr>
+      <tr>
+        <td style='text-align: start' colspan='4'>FOI ENTREGUE A NOTA FISCAL DE REMESSA DOS BIG BAGS?</td>
+        <td colspan='2'>
+          {{#if nfRemessaBags}} (✔) SIM ( ) NÃO {{else}}
+            {{#isFalse nfRemessaBags}} ( ) SIM (✔) NÃO {{else}} ( ) SIM ( ) NÃO {{/isFalse}}
+          {{/if}}
+        </td>
+      </tr>
+    </table>
+    <table class='transport-info-table' style='margin-top: 3px'>
+      <tr>
+        <td class='section-title' colspan='14'>2. INFORMAÇÕES DE TRANSPORTE</td>
+      </tr>
+      <tr>
+        <td>
+          <div style='display: flex; flex-direction: column; padding: 3px'>
+            <span style='font-weight: 600'>TRANSPORTADORA</span>
+            <span style='margin-top: 3px'>{{transportadora}}</span>
+          </div>
+        </td>
+        <td>
+          <div style='display: flex; flex-direction: column; padding: 3px'>
+            <span style='font-weight: 600'>Nº DACTE</span>
+            <span style='margin-top: 3px'>{{numeroDacte}}</span>
+          </div>
+        </td>
+        <td>
+          <div style='display: flex; flex-direction: column; padding: 3px'>
+            <span style='font-weight: 600'>DATA DE EMISSÃO</span>
+            <span style='margin-top: 3px'>{{formatDate dataEmissao}}</span>
+          </div>
+        </td>
+        <td>
+          <div style='display: flex; flex-direction: column; padding: 3px'>
+            <span style='font-weight: 600; text-align: center'>TIPO DE FRETE</span>
+            <div style='display: flex; justify-content: space-between; margin-top: 3px'>
+              {{#if (eq tipoFrete 'FOB')}} (✔) FOB ( ) CIF {{else}}
+                {{#if (eq tipoFrete 'CIF')}}
+                  ( ) FOB (✔) CIF
+                {{else}} ( ) FOB ( ) CIF {{/if}}
+              {{/if}}
+            </div>
+          </div>
+        </td>
+        <td>
+          <div style='display: flex; flex-direction: column; padding: 3px'>
+            <span style='font-weight: 600'>VALOR</span>
+            <span style='margin-top: 3px'>{{formatNumber valorFrete style='currency' currency='BRL'}}</span>
+          </div>
+        </td>
+        <td>
+          <div style='display: flex; flex-direction: column; padding: 3px'>
+            <span style='font-weight: 600; text-align: center'>PLACA</span>
+            <div style='margin-top: 3px'>
+              <span>CAVALO: </span>
+              <span style='margin-left: 3px'>{{cavalo}}</span>
+            </div>
+            <div style='margin-top: 3px'>
+              <span>CARRETA: </span>
+              <span style='margin-left: 3px'>{{carreta}}</span>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div style='display: flex; flex-direction: column; padding: 3px'>
+            <span style='font-weight: 600; text-align: center'>MOTORISTA</span>
+            <div style='display: flex; margin-top: 3px'>
+              <span style='font-weight: 500'>NOME:</span>
+              <span style='margin-left: 3px'>{{nomeMotorista}}</span>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <table class='quality-info-table' style='margin-top: 3px; width: 100%'>
+      <tr>
+        <td class='section-title' colspan='6'>3. ASPECTOS DE QUALIDADE/SEGURANÇA</td>
+        <td class='' rowspan='9' style='vertical-align: top; width: 250px'>
+          <div>
+            <span style='font-weight: 600'>OBSERVAÇÕES</span>
+          </div>
+          <div style='min-height: 100%; margin-top: 3px; margin-left: 3px; text-align: start; white-space: pre-line;'>
+            <strong>LACRES:</strong>{{breakLacresString lacres}}
+
+            {{#if observacoesQualidade}}
+
+              {{~'\n'}}{{observacoesQualidade}}
+            {{/if}}
+          </div>
+        </td>
+      </tr>
+
+      <!-- INFORMAÇÕES INICIAIS -->
+      <tr>
+        <td>
+          <div style='display: flex; flex-direction: column; padding: 3px'>
+            <span style='font-weight: 600'>LOTE</span>
+            <span style='margin-top: 3px'>{{lote}}</span>
+          </div>
+        </td>
+        <td>
+          <div style='display: flex; flex-direction: column; padding: 3px'>
+            <span style='font-weight: 600'>Nº LACRES</span>
+            <span style='margin-top: 3px'>{{numeroLacres}}</span>
+          </div>
+        </td>
+        <td>
+          <div style='display: flex; flex-direction: column; padding: 3px'>
+            <span style='font-weight: 600'>AVARIA</span>
+            <div style='display: flex; justify-content: space-around; margin-top: 3px'>
+              {{#if avaria}} (✔) SIM ( ) NÃO {{else}}
+                {{#if (eq avaria false)}} ( ) SIM (✔) NÃO {{else}} ( ) SIM ( ) NÃO {{/if}}
+              {{/if}}
+            </div>
+          </div>
+        </td>
+        <td colspan='3'>
+          <div style='display: flex; flex-direction: column; padding: 3px'>
+            <span style='font-weight: 600; text-align: center'>AMOSTRA RETIRADA</span>
+            <div style='display: flex; justify-content: space-around; margin-top: 3px'>
+              {{#if (eq amostraRetirada true)}} (✔) SIM ( ) NÃO {{else}}
+                {{#if (eq amostraRetirada false)}} ( ) SIM (✔) NÃO {{else}} ( ) SIM ( ) NÃO {{/if}}
+              {{/if}}
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <!-- PERGUNTAS -->
+      <tr>
+        <td style='text-align: start' colspan='4'>O CAMINHÃO ESTAVA EM CONDIÇÕES ADEQUANDAS?</td>
+        <td colspan='2'>
+          {{#if (eq condicoesCaminhaoAdequadas true)}} (✔) SIM ( ) NÃO {{else}}
+            {{#if (eq condicoesCaminhaoAdequadas false)}} ( ) SIM (✔) NÃO {{else}} ( ) SIM ( ) NÃO {{/if}}
+          {{/if}}
+        </td>
+      </tr>
+      <tr>
+        <td style='text-align: start' colspan='4'>MOTORISTA COM TRAGES APROPIADOS?</td>
+        <td colspan='2'>
+          {{#if (eq motoristaComTrajes true)}} (✔) SIM ( ) NÃO {{else}}
+            {{#if (eq motoristaComTrajes false)}} ( ) SIM (✔) NÃO {{else}} ( ) SIM ( ) NÃO {{/if}}
+          {{/if}}
+        </td>
+      </tr>
+      <tr>
+        <td style='text-align: start' colspan='4'>O MOTORISTA ESTEVE PRESENTE EM TODO DESCARREGAMENTO?</td>
+        <td colspan='2'>
+          {{#if (eq motoristaPresente true)}} (✔) SIM ( ) NÃO {{else}}
+            {{#if (eq motoristaPresente false)}} ( ) SIM (✔) NÃO {{else}} ( ) SIM ( ) NÃO {{/if}}
+          {{/if}}
+        </td>
+      </tr>
+      <tr>
+        <td style='text-align: start' colspan='4'>A CONFERÊNCIA QUALITATIVA DOS BAGS FOI SATISFATÓRIA?</td>
+        <td colspan='2'>
+          {{#if (eq conferenciaQualitativaSatisfatoria true)}} (✔) SIM ( ) NÃO {{else}}
+            {{#if (eq conferenciaQualitativaSatisfatoria false)}} ( ) SIM (✔) NÃO {{else}} ( ) SIM ( ) NÃO {{/if}}
+          {{/if}}
+        </td>
+      </tr>
+
+      <tr>
+        <td style='text-align: start' colspan='6'>
+          <span>HORÁRIO DE ENTREGA DA AMOSTRA:</span>
+          <span style='margin-right: 23px'>{{horarioEntregaAmostra}}</span>
+          <span>AMOSTRA RECEBIDA POR (assinatura): </span>
+          <span>{{amostraRecebidaPor}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td style='text-align: start' colspan='4'>AMOSTRA LIBERADA PELO CONTROLE DE QUALIDADE FISICO-QUIMICO?</td>
+        <td colspan='2'>
+          {{#if (eq amostraLiberadaControleFisicoQuimico true)}} (✔) SIM ( ) NÃO {{else}}
+            {{#if (eq amostraLiberadaControleFisicoQuimico false)}} ( ) SIM (✔) NÃO {{else}} ( ) SIM ( ) NÃO {{/if}}
+          {{/if}}
+        </td>
+      </tr>
+      <tr>
+        <td style='text-align: start' colspan='4'>STATUS FINAL DE CARGA</td>
+        <td colspan='2'>
+          {{#if (eq statusFinalCarga 'Aprovada')}} (✔) Aprovada ( ) Reprovada {{else}}
+            {{#if (eq statusFinalCarga 'Reprovada')}} ( ) Aprovada (✔) Reprovada {{else}}
+              ( ) Aprovada ( ) Reprovada
+            {{/if}}
+          {{/if}}
+        </td>
+      </tr>
+    </table>
+    <table style='margin-bottom: 3px; margin-top: 3px'>
+      <tr>
+        <td class='section-title-green' colspan='3' style='text-align: center'>APROVAÇÕES</td>
+      </tr>
+      <tr>
+        <td style='text-align: center; border: 1px solid black; font-size: 14px'>
+          <strong style='text-decoration: underline'>Elaborado por: <br /></strong>
+          Lucas Silva<br />
+          25/04/2025<br />
+          Supervisor de Almoxarifado
+        </td>
+        <td style='text-align: center; border: 1px solid black; font-size: 14px'>
+          <strong style='text-decoration: underline'>Revisado por: <br /></strong>
+          Roney Souza<br />
+          25/04/2025<br />
+          Cordenador de Suplimentos
+        </td>
+        <td style='text-align: center; border: 1px solid black; font-size: 14px'>
+          <strong style='text-decoration: underline'>Aprovado por: <br /></strong>
+          Ronicley Martins<br />
+          25/04/2025<br />
+          Gerente de Suplimentos
+        </td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td class='section-title-no-color' colspan='4' style='text-align: center'>HISTÓRICO</td>
+      </tr>
+      <tr>
+        <td style='text-align: center; font-weight: bold'>REVISÃO</td>
+        <td style='text-align: center; font-weight: bold'>DATA</td>
+        <td style='text-align: center; font-weight: bold'>RESPONSÁVEL</td>
+        <td style='text-align: center; font-weight: bold'>ALTERAÇÕES</td>
+      </tr>
+      <tr style='font-size: 8x'>
+        <td style='font-size: 8x'>00</td>
+        <td style='font-size: 8x'>25.04.2025</td>
+        <td style='font-size: 8x'>Lucas Silva</td>
+        <td style='font-size: 8x'>- Emissão inicial</td>
+      </tr>
+    </table>
+  </body>
+</html>

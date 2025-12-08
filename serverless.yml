@@ -1,0 +1,38 @@
+service: cajuina-forms
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: sa-east-1
+  memorySize: 512
+  timeout: 30
+  environment:
+    GOOGLE_RECAPTCHA_PROJECT_ID: ${env:GOOGLE_RECAPTCHA_PROJECT_ID}
+    GOOGLE_RECAPTCHA_SITE_KEY: ${env:GOOGLE_RECAPTCHA_SITE_KEY}
+    GOOGLE_CREDENTIALS_JSON: ${env:GOOGLE_CREDENTIALS_JSON}
+    BREVO_API_KEY: ${env:BREVO_API_KEY}
+    BREVO_SENDER_EMAIL: ${env:BREVO_SENDER_EMAIL, 'contato@cajuinasaogeraldo.com.br'}
+    BREVO_SENDER_NAME: ${env:BREVO_SENDER_NAME, 'Cajuína São Geraldo'}
+
+functions:
+  api:
+    handler: dist/index.handler
+    events:
+      - httpApi:
+          method: ANY
+          path: /{proxy+}
+      - httpApi:
+          method: GET
+          path: /health
+
+plugins:
+  - serverless-offline
+
+package:
+  patterns:
+    - "!node_modules/**"
+    - "!shared/**"
+    - "!.git/**"
+    - "dist/**"
+    - "src/templates/**"

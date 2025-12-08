@@ -1,0 +1,231 @@
+<html lang='pt-BR'>
+  <head>
+    <meta charset='UTF-8' />
+    <title>ETIQUETA DE IDENTIFICAÇÃO DA SOLUÇÃO DE AÇÚCAR, PARA ANÁLISE DE FLOCO ÁCIDO</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+      @page {
+        margin: 0;
+        size: A4;
+        scale: 0.9;
+      }
+      html {
+        width: 209.9mm; /* Largura A4 */
+        height: 296.7mm; /* Altura A4 */
+        margin: 50px 50px;
+        padding: 0;
+        scale: 0.95;
+      }
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: 'Roboto', Arial, sans-serif;
+      }
+      body {
+        width: 209.9mm;
+        margin: 0 0;
+        padding-left: 0;
+        padding-right: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+      h2,
+      h3 {
+        text-align: center;
+        margin: 5px 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      td {
+        border: 1px solid black;
+        padding: 2px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: top;
+      }
+      header table {
+        border: 1px solid black;
+        margin-bottom: 5px;
+      }
+      header td {
+        border: none;
+      }
+      header td:nth-child(1) {
+        width: 20%;
+        height: 70px;
+        border-right: 2px solid black;
+        padding-top: 10px;
+      }
+      header td:nth-child(2) {
+        padding-top: 10px;
+        width: 50%;
+        font-size: 18px;
+        font-weight: 600;
+        text-align: center;
+        border-right: 2px solid black;
+      }
+      header td:nth-child(3) {
+        width: 30%;
+        font-size: 13px;
+        text-align: left;
+      }
+      .etiqueta {
+        background: white;
+        page-break-inside: avoid;
+        position: relative;
+      }
+      .page-container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 2mm;
+      }
+      .section-title {
+        background-color: rgb(204, 255, 102);
+        font-weight: 600;
+        font-size: 16px;
+        text-align: center;
+        padding: 5px;
+      }
+      .general-info-row {
+        display: flex;
+        flex-direction: column;
+      }
+      .general-info-row td {
+        text-align: left;
+        font-size: 10px;
+      }
+      .general-info-row td:first-child {
+        border-top: none;
+      }
+      .general-info-row td:last-child {
+        border-bottom: none;
+      }
+      label {
+        margin-right: 10px;
+        font-size: 10px;
+      }
+      input[type='checkbox'] {
+        margin-right: 4px;
+      }
+      .ident-table tr td span {
+        font-size: 15px;
+      }
+    </style>
+  </head>
+  <body class='page-container'>
+    <div
+      class='etiqueta'
+      style="background-image: url('{{background}}'); 
+        background-size: contain; 
+        background-position:center;  
+        background-repeat: repeat; "
+    >
+      <header>
+        <table>
+          <tr>
+            <td>
+              <img src='{{logoBase64}}' alt='Logo' style='width: 100%; height: 65px; object-fit: cover' />
+            </td>
+            <td>ETIQUETA DE IDENTIFICAÇÃO DA SOLUÇÃO DE AÇÚCAR, PARA ANÁLISE DE FLOCO ÁCIDO</td>
+            <td>
+              <p style='border-bottom: 1px solid black; padding: 2px'>
+                REGISTRO Nº:<br />
+                <strong>REG CQFQ 013</strong>
+              </p>
+              <p style='border-bottom: 1px solid black; padding: 2px'>REVISÃO: <strong>00</strong></p>
+              <p>EM VIGOR: <strong>09.07.2024</strong></p>
+            </td>
+          </tr>
+        </table>
+      </header>
+      <table class='ident-table'>
+        <tr>
+          <td class='section-title' colspan='4'>Informações de Identificação da Solução de Açúcar</td>
+        </tr>
+        <tr>
+          <td colspan='4' style='text-align: left; margin-left: 3px'>
+            <span style='margin-right: 10px'>N° da Amostra do Açúcar: </span>
+            <span>{{numeroAmostra}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan='4' style='text-align: left; margin-left: 3px'>
+            <span style='margin-right: 10px'>N° da Nota Fiscal:</span>
+            <span>{{numeroNotaFiscal}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan='4' style='text-align: left; margin-left: 3px'>
+            <span style='margin-right: 10px'>Data de Fabricação do Açúcar:</span>
+            <span>{{formatDate dataFabricacao}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan='4' style='text-align: left; margin-left: 3px'>
+            <span style='margin-right: 10px'>Data de validade do açúcar:</span>
+            <span>{{formatDate dataValidade}}</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan='4' style='text-align: left; margin-left: 3px'>
+            <span style='margin-right: 10px'>Data de recebimento do açúcar:</span>
+            <span>{{formatDate dataRecebimento}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan='4' style='text-align: left; margin-left: 3px'>
+            <span style='margin-right: 10px'>Data de preparo:</span>
+            <span>{{formatDate dataPreparo}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan='4' style='text-align: left; margin-left: 3px'>
+            <span style='margin-right: 10px'>Analisar solução em:</span>
+            <span>{{formatDate dataAnalise}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan='4' style='text-align: left; margin-left: 3px'>
+            <span style='margin-right: 10px'>Usina:</span>
+            <span>{{usina}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan='2' style='text-align: left; margin-left: 3px'>
+            <div style='display: flex'>
+              <div>
+                <span style='margin-right: 10px'>Lote:</span>
+                <span>{{lote}}</span>
+              </div>
+            </div>
+          </td>
+          <td colspan='2'>
+            <div style='text-align: left'>
+              <span style='margin-left: 2px'>Safra:</span>
+              <span>{{safra}}</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan='4' style='text-align: left; margin-left: 3px'>
+            <span>Solução Preparada por:</span>
+            <span>{{preparadaPor}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan='4' style='text-align: left; margin-left: 3px; height: 70px'>
+            <span style='margin-right: 10px; font-weight: 600'>Observações:</span>
+            <span style=' white-space: pre-line;'>{{observacoes}}</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+  </body>
+</html>
