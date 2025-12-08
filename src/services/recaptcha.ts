@@ -1,6 +1,68 @@
-import { RecaptchaEnterpriseServiceClient } from "@google-cloud/recaptcha-enterprise";
+interface TokenProperties {
+  valid: boolean;
+  invalidReason?: string;
+  action?: string;
+  hostname?: string;
+  createTime?: string;
+}
 
-const client = new RecaptchaEnterpriseServiceClient();
+interface RiskAnalysis {
+  score?: number;
+  reasons?: string[];
+}
+
+interface AssessmentResponse {
+  name: string;
+  event: {
+    token: string;
+    siteKey: string;
+  };
+  tokenProperties: TokenProperties;
+  riskAnalysis?: RiskAnalysis;
+}
+
+interface GoogleCredentials {
+  client_id: string;
+  client_secret: string;
+  refresh_token: string;
+  type: string;
+}
+
+async function getAccessToken(): Promise<string> {
+  const credentialsJson = process.env.GOOGLE_CREDENTIALS_JSON;
+
+  if (!credentialsJson) {
+    throw new Error("Missing GOOGLE_CREDENTIALS_JSON environment variable");
+  }
+
+  let credentials: GoogleCredentials;
+  try {
+    credentials = JSON.parse(credentialsJson);
+  } catch {
+    throw new Error("Invalid GOOGLE_CREDENTIALS_JSON format");
+  }
+
+  const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      client_id: credentials.client_id,
+      client_secret: credentials.client_secret,
+      refresh_token: credentials.refresh_token,
+      grant_type: "refresh_token",
+    }),
+  });
+
+  if (!tokenResponse.ok) {
+    const error = await tokenResponse.text();
+    throw new Error(`Failed to refresh access token: ${error}`);
+  }
+
+  const tokenData = (await tokenResponse.json()) as { access_token: string };
+  return tokenData.access_token;
+}
 
 export async function validateCaptcha(
   token: string,
@@ -15,37 +77,56 @@ export async function validateCaptcha(
     );
   }
 
-  const projectPath = client.projectPath(projectId);
-
   try {
-    const [response] = await client.createAssessment({
-      parent: projectPath,
-      assessment: {
-        event: { token, siteKey },
+    const accessToken = await getAccessToken();
+
+    const apiUrl = `https://recaptchaenterprise.googleapis.com/v1/projects/${projectId}/assessments`;
+
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        event: {
+          token,
+          siteKey,
+        },
+      }),
     });
 
-    if (!response.tokenProperties?.valid) {
-      console.warn("Invalid token:", response.tokenProperties?.invalidReason);
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(`reCAPTCHA API error: ${error}`);
+    }
+
+    const assessment = (await response.json()) as AssessmentResponse;
+
+    if (!assessment.tokenProperties?.valid) {
+      console.warn(
+        "Invalid token:",
+        assessment.tokenProperties?.invalidReason
+      );
       return null;
     }
 
     // Check if the expected action was executed (only for v3/Enterprise v3)
     if (
       recaptchaAction &&
-      response.tokenProperties.action !== recaptchaAction
+      assessment.tokenProperties.action !== recaptchaAction
     ) {
       console.warn(
-        `Action mismatch: expected '${recaptchaAction}', got '${response.tokenProperties.action}'. Aceito mesmo assim para v2-checkbox.`
+        `Action mismatch: expected '${recaptchaAction}', got '${assessment.tokenProperties.action}'. Aceito mesmo assim para v2-checkbox.`
       );
       // Accept anyway for v2-checkbox compatibility
     }
 
-    const score = response.riskAnalysis?.score ?? null;
+    const score = assessment.riskAnalysis?.score ?? null;
     console.log(`reCAPTCHA score: ${score}`);
 
-    if (response.riskAnalysis?.reasons) {
-      response.riskAnalysis.reasons.forEach((reason) => {
+    if (assessment.riskAnalysis?.reasons) {
+      assessment.riskAnalysis.reasons.forEach((reason) => {
         console.debug(`Risk reason: ${reason}`);
       });
     }
