@@ -93,7 +93,7 @@ export async function validateCaptcha(token: string, recaptchaAction?: string): 
 
 		if (!response.ok) {
 			const error = await response.json();
-			throw new Error(`reCAPTCHA API error: ${error}`);
+			throw new Error(`reCAPTCHA API error: ${JSON.stringify(error)}`);
 		}
 
 		const assessment = (await response.json()) as AssessmentResponse;
