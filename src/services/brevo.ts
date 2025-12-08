@@ -6,14 +6,12 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { z } from 'zod';
 import { FORM_REGISTRY, AllowedFormIds } from '../types/form-registry';
+import { createLogger } from '../lib/logger';
+
+const log = createLogger('brevo');
 
 const emailApi = new TransactionalEmailsApi();
 emailApi.setApiKey(TransactionalEmailsApiApiKeys.apiKey, process.env.BREVO_API_KEY || '');
-
-const sender = {
-	email: process.env.BREVO_SENDER_EMAIL || 'contato@cajuinasaogeraldo.com.br',
-	name: process.env.BREVO_SENDER_NAME || 'Cajuína São Geraldo',
-};
 
 export interface BrevoMailResult {
 	messageId: string;
@@ -56,14 +54,14 @@ export async function sendFormEmail(body: unknown): Promise<BrevoMailResult> {
 
 		const response = await emailApi.sendTransacEmail(emailData);
 
-		console.log(`Formulário ${formId} enviado com sucesso`);
+		log.info({ formId, messageId: response.body.messageId }, 'Email enviado com sucesso');
 
 		return {
 			messageId: response.body.messageId || '',
 			success: true,
 		};
 	} catch (error) {
-		console.error(`Erro ao enviar formulário ${formId}:`, error);
+		log.error({ formId, err: error }, 'Erro ao enviar email');
 
 		return {
 			messageId: '',
@@ -100,16 +98,31 @@ function compileFormTemplate(templateName: string, data: Record<string, unknown>
 		return template(data);
 	} catch (error) {
 		const message = error instanceof Error ? error.message : 'Unknown error';
-		console.error(`Erro ao compilar template ${templateName}: ${message}`);
+		log.error({ templateName, err: error }, 'Erro ao compilar template');
 		throw new Error(`Erro ao processar template: ${message}`);
 	}
 }
 
 function getTemplatePath(filename: string): string {
-	const baseDir =
-		process.env.NODE_ENV === 'production' ? path.join(process.cwd(), 'dist', 'templates') : path.join(process.cwd(), 'src', 'templates');
+	// Em Lambda, __dirname aponta para o diretório do código
+	// Templates ficam em templates/email/ relativo à raiz do projeto
+	const possiblePaths = [
+		// Desenvolvimento local
+		path.join(process.cwd(), 'templates', 'email', filename),
+		// Lambda (dist)
+		path.join(__dirname, '..', '..', 'templates', 'email', filename),
+		// Lambda alternativo
+		path.join('/var/task', 'templates', 'email', filename),
+	];
 
-	return path.join(baseDir, filename);
+	for (const templatePath of possiblePaths) {
+		if (fs.existsSync(templatePath)) {
+			return templatePath;
+		}
+	}
+
+	// Fallback para o primeiro path (vai dar erro com mensagem clara)
+	return possiblePaths[0];
 }
 
 function buildTemplateData(data: Record<string, unknown>, now: Date): Record<string, unknown> & { _date: string; _time: string } {

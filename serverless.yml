@@ -1,5 +1,5 @@
 service: cajuina-forms
-frameworkVersion: "3"
+frameworkVersion: '3'
 
 provider:
   name: aws
@@ -8,6 +8,7 @@ provider:
   memorySize: 512
   timeout: 30
   environment:
+    NODE_ENV: production
     GOOGLE_RECAPTCHA_PROJECT_ID: ${env:GOOGLE_RECAPTCHA_PROJECT_ID}
     GOOGLE_RECAPTCHA_SITE_KEY: ${env:GOOGLE_RECAPTCHA_SITE_KEY}
     GOOGLE_CREDENTIALS_JSON: ${env:GOOGLE_CREDENTIALS_JSON}
@@ -20,8 +21,8 @@ functions:
     handler: dist/index.handler
     events:
       - httpApi:
-          method: ANY
-          path: /{proxy+}
+          method: POST
+          path: /forms/submit
       - httpApi:
           method: GET
           path: /health
@@ -31,8 +32,19 @@ plugins:
 
 package:
   patterns:
-    - "!node_modules/**"
-    - "!shared/**"
-    - "!.git/**"
-    - "dist/**"
-    - "src/templates/**"
+    - '!node_modules/**'
+    - 'node_modules/@getbrevo/**'
+    - 'node_modules/handlebars/**'
+    - 'node_modules/date-fns/**'
+    - 'node_modules/zod/**'
+    - 'node_modules/pino/**'
+    - 'node_modules/express/**'
+    - 'node_modules/cors/**'
+    - 'node_modules/helmet/**'
+    - 'node_modules/multer/**'
+    - '!shared/**'
+    - '!.git/**'
+    - '!.wrangler/**'
+    - '!test/**'
+    - 'dist/**'
+    - 'templates/**'
