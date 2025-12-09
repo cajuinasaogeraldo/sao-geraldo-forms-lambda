@@ -14,22 +14,23 @@ const upload = multer({
 	limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
 });
 
-formsRouter.post('/submit', upload.single('anexo'), async (req, res) => {
+formsRouter.post('/submit', upload.array('files', 10), async (req, res) => {
 	const requestId = crypto.randomUUID();
 	const reqLog = log.child({ requestId });
 
 	try {
 		const body = req.body;
 
-		// Converte anexo para base64 se existir
-		if (req.file) {
-			body.anexo = {
-				name: req.file.originalname,
-				content: req.file.buffer.toString('base64'),
-			};
+		// Converte anexos para base64 se existirem
+		const files = req.files as Express.Multer.File[] | undefined;
+		if (files && files.length > 0) {
+			body.anexos = files.map((file) => ({
+				name: file.originalname,
+				content: file.buffer.toString('base64'),
+			}));
 		}
 
-		reqLog.info({ formId: body?.formId, hasFile: !!req.file }, 'Requisição recebida');
+		reqLog.info({ formId: body?.formId, filesCount: files?.length || 0 }, 'Requisição recebida');
 
 		if (!body || typeof body !== 'object') {
 			reqLog.warn('Body inválido ou vazio');

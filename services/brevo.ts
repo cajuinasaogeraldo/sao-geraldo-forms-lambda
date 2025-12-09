@@ -95,6 +95,12 @@ function validateFormData(body: unknown, schema: z.ZodSchema): Record<string, un
 	return result.data as Record<string, unknown>;
 }
 
+// Register Handlebars helper for capitalize
+handlebars.registerHelper('capitalize', function (str: string) {
+	if (!str) return '';
+	return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+});
+
 function compileFormTemplate(templateName: string, data: Record<string, unknown>): string {
 	const templatePath = getTemplatePath(templateName);
 

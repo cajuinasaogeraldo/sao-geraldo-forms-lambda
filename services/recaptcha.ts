@@ -61,6 +61,7 @@ export async function validateCaptcha(token: string, recaptchaAction?: string): 
 				event: {
 					token,
 					siteKey,
+					expectedAction: recaptchaAction,
 				},
 			}),
 		});
