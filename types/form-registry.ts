@@ -11,7 +11,7 @@ export const FORM_REGISTRY: Record<AllowedFormIds, FormConfig> = {
 			senderNameField: 'name',
 			recipientEmail: env.BREVO_RECIPIENT_EMAIL,
 			replyToEmailField: 'email',
-			subjectBuilder: (data) => `Solicitação de Parceria: ${data['eventName']}`,
+			subjectBuilder: (data) => `Solicitação de ${data['requestType']}: ${data['institutionName']}`,
 			tags: ['form-submission', 'solicitacao', 'cajuina'],
 		},
 	},
