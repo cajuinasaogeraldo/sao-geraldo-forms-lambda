@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { env } from '../lib/env';
 
 export enum AllowedFormIds {
 	CAJUINA_PARCERIAS = 'cajuina-site-solicitacoes',
@@ -91,9 +92,9 @@ export const FORM_REGISTRY: Record<AllowedFormIds, FormConfig> = {
 		templateName: 'form-cajuina-parcerias.hbs',
 		schema: CajuinaParceriasSchema,
 		emailConfig: {
-			senderEmail: 'contato@cajuinasaogeraldo.com.br',
+			senderEmail: env.BREVO_SENDER_EMAIL,
 			senderNameField: 'name',
-			recipientEmail: 'si@cajuinasaogeraldo.com.br',
+			recipientEmail: env.BREVO_RECIPIENT_EMAIL,
 			replyToEmailField: 'email',
 			subjectBuilder: (data) => `Solicitação de Parceria: ${data['eventName']}`,
 			tags: ['form-submission', 'solicitacao', 'cajuina'],
@@ -103,9 +104,9 @@ export const FORM_REGISTRY: Record<AllowedFormIds, FormConfig> = {
 		templateName: 'form-cajuina-distribuidor.hbs',
 		schema: CajuinaDistribuidorSchema,
 		emailConfig: {
-			senderEmail: 'contato@cajuinasaogeraldo.com.br',
+			senderEmail: env.BREVO_SENDER_EMAIL,
 			senderNameField: 'name',
-			recipientEmail: 'si@cajuinasaogeraldo.com.br',
+			recipientEmail: env.BREVO_RECIPIENT_EMAIL,
 			replyToEmailField: 'email',
 			subjectBuilder: (data) => `Solicitação de Distribuidor: ${data['razaoSocial']}`,
 			tags: ['form-submission', 'distribuidor', 'cajuina'],
@@ -115,9 +116,9 @@ export const FORM_REGISTRY: Record<AllowedFormIds, FormConfig> = {
 		templateName: 'form-agua-revendedor.hbs',
 		schema: AguaRevendedorSchema,
 		emailConfig: {
-			senderEmail: 'contato@cajuinasaogeraldo.com.br',
+			senderEmail: env.BREVO_SENDER_EMAIL,
 			senderNameField: 'name',
-			recipientEmail: 'si@cajuinasaogeraldo.com.br',
+			recipientEmail: env.BREVO_RECIPIENT_EMAIL,
 			replyToEmailField: 'email',
 			subjectBuilder: (data) => `Solicitação de Revendedor: ${data['razaoSocial']}`,
 			tags: ['form-submission', 'revendedor', 'agua'],

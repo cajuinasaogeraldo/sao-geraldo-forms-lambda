@@ -1,6 +1,7 @@
 import { defineConfig } from 'tsup';
 import { cpSync, existsSync } from 'fs';
 import { join } from 'path';
+import { logger } from './lib/logger';
 
 export default defineConfig({
 	entry: ['index.ts'],
@@ -21,7 +22,7 @@ export default defineConfig({
 
 		if (existsSync(templatesSource)) {
 			cpSync(templatesSource, templatesDest, { recursive: true });
-			console.log('✓ Templates copiados para dist/templates');
+			logger.info('✓ Templates copiados para dist/templates');
 		} else {
 			console.warn('⚠ Pasta templates não encontrada');
 		}

@@ -4,9 +4,9 @@
 	"private": true,
 	"scripts": {
 		"build": "tsup",
-		"dev": "tsx --watch index.ts",
-		"package": "npm run build && cd dist && zip -r ../lambda.zip index.js templates/ && cd ..",
-		"deploy": "npm run package && aws lambda update-function-code --function-name brevoMailService --zip-file fileb://lambda.zip"
+		"dev": "tsx --watch -r dotenv/config index.ts",
+		"package": "pnpm run build && cd dist && zip -r ../lambda.zip index.js templates/ && cd ..",
+		"deploy": "pnpm run package && aws lambda update-function-code --function-name brevoMailService --zip-file fileb://lambda.zip"
 	},
 	"devDependencies": {
 		"@types/aws-lambda": "^8.10.159",

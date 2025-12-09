@@ -1,7 +1,6 @@
 import pino from 'pino';
-import { env } from './env';
 
-const isDev = env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'development';
 
 // Configuração compatível com Cloudflare Workers e AWS Lambda
 export const logger = pino({
@@ -16,6 +15,7 @@ export const logger = pino({
 		transport: {
 			target: 'pino-pretty',
 			options: {
+				destination: process.stdout.fd,
 				colorize: true,
 				translateTime: 'SYS:HH:MM:ss',
 				ignore: 'pid,hostname',

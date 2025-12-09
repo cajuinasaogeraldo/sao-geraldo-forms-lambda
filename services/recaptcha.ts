@@ -1,4 +1,5 @@
 import { env } from '../lib/env';
+import { logger } from '../lib/logger';
 import { AssessmentResponse, GoogleCredentials } from '../types';
 
 async function getAccessToken(): Promise<string> {
@@ -85,7 +86,7 @@ export async function validateCaptcha(token: string, recaptchaAction?: string): 
 		}
 
 		const score = assessment.riskAnalysis?.score ?? null;
-		console.log(`reCAPTCHA score: ${score}`);
+		logger.info(`reCAPTCHA score: ${score}`);
 
 		if (assessment.riskAnalysis?.reasons) {
 			assessment.riskAnalysis.reasons.forEach((reason) => {
