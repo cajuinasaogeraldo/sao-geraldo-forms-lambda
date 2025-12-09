@@ -7,11 +7,12 @@ import * as path from 'path';
 import { z } from 'zod';
 import { FORM_REGISTRY, AllowedFormIds } from '../types/form-registry';
 import { createLogger } from '../lib/logger';
+import { env } from '../lib/env';
 
 const log = createLogger('brevo');
 
 const emailApi = new TransactionalEmailsApi();
-emailApi.setApiKey(TransactionalEmailsApiApiKeys.apiKey, process.env.BREVO_API_KEY || '');
+emailApi.setApiKey(TransactionalEmailsApiApiKeys.apiKey, env.BREVO_API_KEY || '');
 
 export interface BrevoMailResult {
 	messageId: string;
@@ -103,13 +104,12 @@ function compileFormTemplate(templateName: string, data: Record<string, unknown>
 	}
 }
 
-function getTemplatePath(filename: string): string {
-	// Lambda bundled: templates ficam em dist/templates
-	// __dirname aponta para dist/ no Lambda
-	const templatePath = path.join(__dirname, 'templates', 'email', filename);
+export function getTemplatePath(filename: string): string {
+	const rootPath = process.cwd();
+	const templatePath = path.join(rootPath, 'templates', 'email', filename);
 
 	if (!fs.existsSync(templatePath)) {
-		log.error({ filename, __dirname, templatePath }, 'Template não encontrado');
+		log.error({ filename, rootPath, templatePath }, 'Template não encontrado');
 		throw new Error(`Template não encontrado: ${filename}`);
 	}
 

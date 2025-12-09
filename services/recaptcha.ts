@@ -1,35 +1,8 @@
-interface TokenProperties {
-	valid: boolean;
-	invalidReason?: string;
-	action?: string;
-	hostname?: string;
-	createTime?: string;
-}
-
-interface RiskAnalysis {
-	score?: number;
-	reasons?: string[];
-}
-
-interface AssessmentResponse {
-	name: string;
-	event: {
-		token: string;
-		siteKey: string;
-	};
-	tokenProperties: TokenProperties;
-	riskAnalysis?: RiskAnalysis;
-}
-
-interface GoogleCredentials {
-	client_id: string;
-	client_secret: string;
-	refresh_token: string;
-	type: string;
-}
+import { env } from '../lib/env';
+import { AssessmentResponse, GoogleCredentials } from '../types';
 
 async function getAccessToken(): Promise<string> {
-	const credentialsJson = process.env.GOOGLE_CREDENTIALS_JSON;
+	const credentialsJson = env.GOOGLE_CREDENTIALS_JSON;
 
 	if (!credentialsJson) {
 		throw new Error('Missing GOOGLE_CREDENTIALS_JSON environment variable');
@@ -38,8 +11,8 @@ async function getAccessToken(): Promise<string> {
 	let credentials: GoogleCredentials;
 	try {
 		credentials = JSON.parse(credentialsJson);
-	} catch {
-		throw new Error('Invalid GOOGLE_CREDENTIALS_JSON format');
+	} catch (error: any) {
+		throw new Error('Invalid GOOGLE_CREDENTIALS_JSON format', error.message);
 	}
 
 	const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
@@ -65,8 +38,8 @@ async function getAccessToken(): Promise<string> {
 }
 
 export async function validateCaptcha(token: string, recaptchaAction?: string): Promise<number | null> {
-	const projectId = process.env.GOOGLE_RECAPTCHA_PROJECT_ID;
-	const siteKey = process.env.GOOGLE_RECAPTCHA_SITE_KEY;
+	const projectId = env.GOOGLE_RECAPTCHA_PROJECT_ID;
+	const siteKey = env.GOOGLE_RECAPTCHA_SITE_KEY;
 
 	if (!projectId || !siteKey) {
 		throw new Error('Missing GOOGLE_RECAPTCHA_PROJECT_ID or GOOGLE_RECAPTCHA_SITE_KEY');

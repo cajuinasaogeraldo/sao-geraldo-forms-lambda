@@ -1,10 +1,11 @@
 import pino from 'pino';
+import { env } from './env';
 
-const isDev = process.env.NODE_ENV === 'development';
+const isDev = env.NODE_ENV === 'development';
 
 // Configuração compatível com Cloudflare Workers e AWS Lambda
 export const logger = pino({
-	level: process.env.NODE_ENV || (isDev ? 'debug' : 'info'),
+	level: isDev ? 'debug' : 'info',
 	base: {
 		service: 'sao-geraldo-forms-lambda',
 	},

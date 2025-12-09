@@ -3,26 +3,28 @@ import cors from 'cors';
 import helmet from 'helmet';
 import { formsRouter } from './routes/forms';
 import { createLogger } from './lib/logger';
+import payloadSizeMiddleware from './middleware/payload-size';
 
 const log = createLogger('app');
 
 export const app = express();
 
-app.use(cors());
+app.use(
+	cors({
+		methods: ['GET', 'POST'],
+		origin: [
+			/^https:\/\/.*\.cajuinasaogeraldo\.com\.br$/,
+			'http://localhost:4321',
+			'https://red-chamois-284776.hostingersite.com',
+			'https://cornflowerblue-wildcat-224161.hostingersite.com',
+		],
+	})
+);
+
 app.use(helmet());
-app.use(express.json());
 
-app.use((req, res, next) => {
-	const contentLength = req.headers['content-length'];
-	console.log('Content-Length:', contentLength, 'bytes');
-	console.log('Content-Type:', req.headers['content-type']);
-
-	if (contentLength && parseInt(contentLength) > 6 * 1024 * 1024) {
-		console.error('⚠️ Payload maior que 6MB!');
-	}
-
-	next();
-});
+app.use(payloadSizeMiddleware);
+app.use(express.json({ limit: '3mb' }));
 
 app.use('/forms', formsRouter);
 
