@@ -1,27 +1,27 @@
 import pino from 'pino';
 
-const isDev = process.env.NODE_ENV !== 'production';
+const isDev = process.env.NODE_ENV === 'development';
 
 // Configuração compatível com Cloudflare Workers e AWS Lambda
 export const logger = pino({
-	level: process.env.LOG_LEVEL || (isDev ? 'debug' : 'info'),
-	transport: isDev
-		? {
-				target: 'pino-pretty',
-				options: {
-					colorize: true,
-					translateTime: 'SYS:HH:MM:ss',
-					ignore: 'pid,hostname',
-					messageFormat: '{context} | {msg}',
-				},
-		  }
-		: undefined,
+	level: process.env.NODE_ENV || (isDev ? 'debug' : 'info'),
 	base: {
 		service: 'sao-geraldo-forms-lambda',
 	},
 	formatters: {
 		level: (label: string) => ({ level: label }),
 	},
+	...(isDev && {
+		transport: {
+			target: 'pino-pretty',
+			options: {
+				colorize: true,
+				translateTime: 'SYS:HH:MM:ss',
+				ignore: 'pid,hostname',
+				messageFormat: '{context} | {msg}',
+			},
+		},
+	}),
 });
 
 // Helper para criar child loggers com contexto

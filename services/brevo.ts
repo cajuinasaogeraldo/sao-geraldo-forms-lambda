@@ -104,25 +104,16 @@ function compileFormTemplate(templateName: string, data: Record<string, unknown>
 }
 
 function getTemplatePath(filename: string): string {
-	// Em Lambda, __dirname aponta para o diretório do código
-	// Templates ficam em templates/email/ relativo à raiz do projeto
-	const possiblePaths = [
-		// Desenvolvimento local
-		path.join(process.cwd(), 'templates', 'email', filename),
-		// Lambda (dist)
-		path.join(__dirname, '..', '..', 'templates', 'email', filename),
-		// Lambda alternativo
-		path.join('/var/task', 'templates', 'email', filename),
-	];
+	// Lambda bundled: templates ficam em dist/templates
+	// __dirname aponta para dist/ no Lambda
+	const templatePath = path.join(__dirname, 'templates', 'email', filename);
 
-	for (const templatePath of possiblePaths) {
-		if (fs.existsSync(templatePath)) {
-			return templatePath;
-		}
+	if (!fs.existsSync(templatePath)) {
+		log.error({ filename, __dirname, templatePath }, 'Template não encontrado');
+		throw new Error(`Template não encontrado: ${filename}`);
 	}
 
-	// Fallback para o primeiro path (vai dar erro com mensagem clara)
-	return possiblePaths[0];
+	return templatePath;
 }
 
 function buildTemplateData(data: Record<string, unknown>, now: Date): Record<string, unknown> & { _date: string; _time: string } {

@@ -1,35 +1,30 @@
 {
-	"name": "express-d1-app",
+	"name": "sao-geraldo-forms-lambda",
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"deploy": "wrangler deploy",
-		"dev": "wrangler dev",
-		"start": "wrangler dev",
-		"test": "vitest",
-		"cf-typegen": "wrangler types",
-		"build": "tsup"
+		"build": "tsup",
+		"package": "npm run build && cd dist && zip -r ../lambda.zip index.js templates/ && cd ..",
+		"deploy": "npm run package && aws lambda update-function-code --function-name brevoMailService --zip-file fileb://lambda.zip"
 	},
 	"devDependencies": {
-		"@cloudflare/vitest-pool-workers": "^0.8.19",
+		"@types/aws-lambda": "^8.10.159",
 		"@types/cors": "^2.8.19",
 		"@types/express": "^5.0.6",
 		"@types/node": "^24.10.1",
 		"pino-pretty": "^13.1.3",
 		"serverless": "^4.27.1",
 		"tsup": "^8.5.1",
-		"typescript": "^5.5.2",
-		"vitest": "~3.2.0",
-		"wrangler": "^4.53.0"
+		"typescript": "^5.5.2"
 	},
 	"dependencies": {
+		"helmet": "^8.1.0",
 		"@getbrevo/brevo": "^3.0.1",
 		"@types/multer": "^2.0.0",
 		"cors": "^2.8.5",
 		"date-fns": "^4.1.0",
 		"express": "^5.2.1",
 		"handlebars": "^4.7.8",
-		"helmet": "^8.1.0",
 		"multer": "^2.0.2",
 		"pino": "^10.1.0",
 		"serverless-http": "^4.0.0",
