@@ -5,9 +5,10 @@ import * as handlebars from 'handlebars';
 import * as fs from 'fs';
 import * as path from 'path';
 import { z } from 'zod';
-import { FORM_REGISTRY, AllowedFormIds } from '../types/form-registry';
+import { FORM_REGISTRY } from '../types/form-registry';
 import { createLogger } from '../lib/logger';
 import { env } from '../lib/env';
+import { AllowedFormIds } from '../types/schemas';
 
 const log = createLogger('brevo');
 
@@ -55,11 +56,15 @@ export async function sendFormEmail(body: unknown): Promise<BrevoMailResult> {
 
 		const response = await emailApi.sendTransacEmail(emailData);
 
-		log.info({ formId, messageId: response.body.messageId }, 'Email enviado com sucesso');
+		log.info(
+			{ formId, messageId: response.body.messageId, body: response.body },
+			`Email enviado com sucesso para ${emailConfig.recipientEmail}`
+		);
 
 		return {
 			messageId: response.body.messageId || '',
 			success: true,
+			...response.body,
 		};
 	} catch (error) {
 		log.error({ formId, err: error }, 'Erro ao enviar email');
