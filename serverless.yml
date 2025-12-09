@@ -3,10 +3,10 @@ frameworkVersion: '3'
 
 provider:
   name: aws
-  runtime: nodejs20.x
-  region: sa-east-1
+  runtime: nodejs24.x
+  region: us-east-1
   memorySize: 512
-  timeout: 30
+  timeout: 60
   environment:
     NODE_ENV: production
     GOOGLE_RECAPTCHA_PROJECT_ID: ${env:GOOGLE_RECAPTCHA_PROJECT_ID}
@@ -15,10 +15,12 @@ provider:
     BREVO_API_KEY: ${env:BREVO_API_KEY}
     BREVO_SENDER_EMAIL: ${env:BREVO_SENDER_EMAIL, 'contato@cajuinasaogeraldo.com.br'}
     BREVO_SENDER_NAME: ${env:BREVO_SENDER_NAME, 'Cajuína São Geraldo'}
+  httpApi:
+    cors: true
 
 functions:
   api:
-    handler: dist/index.handler
+    handler: index.handler
     events:
       - httpApi:
           method: POST
@@ -26,9 +28,6 @@ functions:
       - httpApi:
           method: GET
           path: /health
-
-plugins:
-  - serverless-offline
 
 package:
   patterns:
