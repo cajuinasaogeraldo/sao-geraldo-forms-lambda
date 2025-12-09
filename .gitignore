@@ -12,6 +12,8 @@ lerna-debug.log*
 
 report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 
+sao-geraldo-forms-lambda-dist.zip
+
 # Runtime data
 
 pids
