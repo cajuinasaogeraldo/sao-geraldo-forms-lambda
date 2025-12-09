@@ -15,12 +15,15 @@ provider:
     BREVO_API_KEY: ${env:BREVO_API_KEY}
     BREVO_SENDER_EMAIL: ${env:BREVO_SENDER_EMAIL, 'contato@cajuinasaogeraldo.com.br'}
     BREVO_SENDER_NAME: ${env:BREVO_SENDER_NAME, 'Cajuína São Geraldo'}
+  tracing:
+    lambda: true
   httpApi:
     cors: true
 
 functions:
   api:
     handler: index.handler
+    name: brevoMailService
     events:
       - httpApi:
           method: POST
