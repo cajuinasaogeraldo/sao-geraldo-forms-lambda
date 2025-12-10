@@ -1,6 +1,6 @@
 import { FormConfig } from '.';
 import { env } from '../lib/env';
-import { AllowedFormIds, CajuinaParceriasSchema, CajuinaDistribuidorSchema, AguaRevendedorSchema } from './schemas';
+import { AllowedFormIds, CajuinaParceriasSchema, CajuinaDistribuidorSchema, AguaRevendedorSchema, ContatoFormSchema } from './schemas';
 
 export const FORM_REGISTRY: Record<AllowedFormIds, FormConfig> = {
 	[AllowedFormIds.CAJUINA_PARCERIAS]: {
@@ -25,6 +25,18 @@ export const FORM_REGISTRY: Record<AllowedFormIds, FormConfig> = {
 			replyToEmailField: 'email',
 			subjectBuilder: (data) => `Solicitação de Distribuidor: ${data['razaoSocial']}`,
 			tags: ['form-submission', 'distribuidor', 'cajuina'],
+		},
+	},
+	[AllowedFormIds.CONTATO_FORM]: {
+		templateName: 'form-contato.hbs',
+		schema: ContatoFormSchema,
+		emailConfig: {
+			senderEmail: env.BREVO_SENDER_EMAIL,
+			senderNameField: 'name',
+			recipientEmail: env.BREVO_RECIPIENT_EMAIL,
+			replyToEmailField: 'email',
+			subjectBuilder: (data) => `Nova Mensagem do Formulário de Contato: ${data['_origin']}`,
+			tags: ['form-submission', 'contato', 'site'],
 		},
 	},
 	[AllowedFormIds.AGUA_REVENDEDOR]: {

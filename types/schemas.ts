@@ -4,12 +4,13 @@ enum AllowedFormIds {
 	CAJUINA_PARCERIAS = 'cajuina-site-solicitacoes',
 	CAJUINA_DISTRIBUIDOR = 'cajuina-site-distribuidor',
 	AGUA_REVENDEDOR = 'agua-site-revendedor',
+	CONTATO_FORM = 'site-contato-form',
 }
 
 // Base schema for all form submissions
 const BaseFormSchema = z.object({
 	captchaToken: z.string().min(1, 'Token do captcha é obrigatório'),
-	formId: z.nativeEnum(AllowedFormIds),
+	formId: z.enum(AllowedFormIds),
 });
 
 // Schema for anexo (attachment)
@@ -65,4 +66,15 @@ const AguaRevendedorSchema = BaseFormSchema.extend({
 	acceptance: z.coerce.boolean().refine((val) => val === true, 'Você deve aceitar os termos'),
 });
 
-export { AllowedFormIds, BaseFormSchema, CajuinaParceriasSchema, CajuinaDistribuidorSchema, AguaRevendedorSchema };
+const ContatoFormSchema = BaseFormSchema.extend({
+	name: z.string().min(1, 'Nome é obrigatório'),
+	email: z.string().min(1, 'E-mail é obrigatório').email('E-mail inválido'),
+	whatsapp: z.string().min(1, 'Telefone é obrigatório'),
+	message: z.string().min(1, 'Razão social é obrigatória'),
+	uf: z.string().min(1, 'UF é obrigatório'),
+	city: z.string().min(1, 'Cidade é obrigatória'),
+	acceptance: z.coerce.boolean().refine((val) => val === true, 'Você precisa aceitar a política'),
+	_origin: z.string(),
+});
+
+export { AllowedFormIds, BaseFormSchema, CajuinaParceriasSchema, CajuinaDistribuidorSchema, AguaRevendedorSchema, ContatoFormSchema };
